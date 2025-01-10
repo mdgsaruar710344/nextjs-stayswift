@@ -1,7 +1,12 @@
+
 import Image from "next/image";
 import Link from "next/link";
+import UserState from "./UserState";
+
 
 const Navbar = () => {
+
+
   return (
     <div className="flex justify-between">
     
@@ -12,7 +17,7 @@ const Navbar = () => {
        alt="Stay Swift Logo" 
       width={150}
       height={150}
-      srcset=""/>
+      />
     </Link>
 
       </div>
@@ -37,9 +42,10 @@ const Navbar = () => {
         <Link href="/bookings">Bookings</Link>
       </li>
 
-      <li>
-        <Link href="/login" class="login">Login</Link>
-      </li>
+
+
+        <UserState></UserState>
+   
     </ul>
       </div>
  

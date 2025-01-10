@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { getSession } from "./actions";
 
 export default async function Home() {
- const sessionData= await getSession();
+ const sessionData= await auth();
  console.log(sessionData);
  console.log("hello");
   return (

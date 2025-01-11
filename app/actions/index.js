@@ -2,6 +2,7 @@
 
 import { auth, signIn, signOut } from "@/auth"
 import { revalidatePath } from "next/cache";
+import { getAllHotels, getHotelById, getReviewsByHotelId, getUserByEmail } from "../queries";
 
 export async function SignInWithGoogle(){
  const signedUser=await signIn("google", {redirectTo:"/"});
@@ -67,3 +68,23 @@ const name= `${fname} ${lname}`;
  return data;
 
 }
+
+export async function handleGetAllHotels(){
+  const hotels= await getAllHotels();
+  return hotels;
+}
+
+export async function handleGetUserByEmail(email){
+  const user= await getUserByEmail(email);
+  return user;
+}
+
+export async function handleGetHotelById(hotelID){
+  const hotel= await getHotelById(hotelID);
+  return hotel;
+}
+export async function handleGetReviewsByHotelId(hotelID){
+  const hotel= await getReviewsByHotelId(hotelID);
+  return hotel;
+}
+

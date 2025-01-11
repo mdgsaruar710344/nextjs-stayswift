@@ -2,7 +2,7 @@
 
 import { auth, signIn, signOut } from "@/auth"
 import { revalidatePath } from "next/cache";
-import { getAllHotels, getHotelById, getReviewsByHotelId, getUserByEmail } from "../queries";
+import { getAllHotels, getAmenitiesById, getBookingsByUserId, getHotelById, getRatingsByHotelId, getReviewsByHotelId, getUserByEmail } from "../queries";
 
 export async function SignInWithGoogle(){
  const signedUser=await signIn("google", {redirectTo:"/"});
@@ -87,4 +87,17 @@ export async function handleGetReviewsByHotelId(hotelID){
   const hotel= await getReviewsByHotelId(hotelID);
   return hotel;
 }
+export async function handleGetRatingsByHotelId(hotelID){
+  const hotel= await getRatingsByHotelId(hotelID);
+  return hotel;
+}
+export async function handleGetBookingsByUserId(userId){
+  const bookings= await getBookingsByUserId(userId);
+  return bookings;
+}
+export async function handleGetAmenitiesById(amenitiesId){
+  const amenities= await getAmenitiesById(amenitiesId);
+  return amenities;
+}
+
 

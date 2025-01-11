@@ -1,4 +1,4 @@
-import { hotelsModel, reviewsModel, usersModel } from "../models";
+import { amenitiesModel, bookingsModel, hotelsModel, ratingsModel, reviewsModel, usersModel } from "../models";
 
 export async function getAllUsers() {
   try {
@@ -56,9 +56,10 @@ export async function getHotelById(hotelID) {
 }
 
 
-export async function getRatingsByHoyelId(hotelID) {
+export async function getRatingsByHotelId(hotelID) {
   try {
-    const hotel=await hotelsModel.findById(hotelID).lean();
+    const hotel=await ratingsModel.find({
+      hotelId:hotelID}).lean();
     console.log(hotel);
     return hotel;
   } catch (error) {
@@ -66,12 +67,23 @@ export async function getRatingsByHoyelId(hotelID) {
   }
 }
 
-
-export async function getAmenitiesById(hotelID) {
+export async function getBookingsByUserId(userId) {
   try {
-    const hotel=await hotelsModel.findById(hotelID).lean();
-    console.log(hotel);
-    return hotel;
+    const bookings=await bookingsModel.find({
+      userId:userId}).lean();
+    console.log(bookings);
+    return bookings;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+export async function getAmenitiesById(amenitiesId) {
+  try {
+    const amenities=await amenitiesModel.findById(amenitiesId).lean();
+    console.log(amenities);
+    return amenities;
   } catch (error) {
     console.error(error);
   }

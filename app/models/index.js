@@ -34,6 +34,7 @@ const reviewsSchema= new Schema({
           required:true
         },     
 });
+
 const ratingsSchema= new Schema({
         hotelId:{
           type:ObjectId,
@@ -45,6 +46,42 @@ const ratingsSchema= new Schema({
         },
         rating:{
           type:Number,
+          required:true
+        },     
+});
+const bookingsSchema= new Schema({
+        hotelId:{
+          type:ObjectId,
+          required:true
+        },
+        userId:{
+          type:ObjectId,
+          required:true,  
+        },
+        checkIn:{
+          type:Number,
+          required:true
+        },     
+        checkOut:{
+          type:Number,
+          required:true
+        },     
+});
+const amenitiesSchema= new Schema({
+        name:{
+          type:String,
+          required:true
+        },
+        price:{
+          type:Number,
+          required:true,  
+        },
+        instructions:{
+          type:String,
+          required:true
+        },     
+        hours:{
+          type:String,
           required:true
         },     
 });
@@ -127,10 +164,10 @@ const hotelsSchema= new Schema({
     type:String,
     required:true
   },
-   amenities: {
-    type:Array,
-    required:true
-  }
+   amenities: [{
+    type:ObjectId,
+    ref:'amenitiesModel'
+  }]
 
 });
 
@@ -138,3 +175,5 @@ export const usersModel= mongoose.models.users ?? mongoose.model("users",usersSc
 export const hotelsModel= mongoose.models.hotels ?? mongoose.model("hotels",hotelsSchema);
 export const reviewsModel= mongoose.models.reviews ?? mongoose.model("reviews",reviewsSchema);
 export const ratingsModel= mongoose.models.ratings ?? mongoose.model("ratings",ratingsSchema);
+export const bookingsModel= mongoose.models.bookings ?? mongoose.model("bookings",bookingsSchema);
+export const amenitiesModel= mongoose.models.amenities ?? mongoose.model("amenities",amenitiesSchema);

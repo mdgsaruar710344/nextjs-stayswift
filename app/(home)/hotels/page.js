@@ -1,6 +1,6 @@
-import Filter from "../components/hotellisting/Filter";
-import HotelList from "../components/hotellisting/HotelList";
-import Search from "../components/search/Search";
+import Filter from "../../components/hotellisting/Filter";
+import HotelList from "../../components/hotellisting/HotelList";
+import Search from "../../components/search/Search";
 
 const hotelPage = () => {
   return (

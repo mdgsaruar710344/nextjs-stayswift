@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Search from "./components/search/Search";
+import Search from "../components/search/Search";
 import { auth } from "@/auth";
-import { getSession } from "./actions";
+import { getSession } from "../actions";
 
 export default async function Home() {
  const sessionData= await auth();

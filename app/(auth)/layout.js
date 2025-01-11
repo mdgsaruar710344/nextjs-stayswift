@@ -1,8 +1,8 @@
 
-import { refreshPage } from "./actions";
-import Navbar from "./components/navbar/Navbar";
-import "./globals.css";
-import { connectDB } from "./services";
+import { refreshPage } from "../actions";
+import Navbar from "../components/navbar/Navbar";
+import "../globals.css";
+import { connectDB } from "../services";
 
 
 
@@ -17,7 +17,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body >
-        <Navbar></Navbar>
+        <Navbar fromHomeState={false}></Navbar>
         {children}
       </body>
     </html>

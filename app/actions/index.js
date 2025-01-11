@@ -43,3 +43,27 @@ export async function getSession() {
 
 }
 
+export async function handleRegistration(formData) {
+  const fname=formData.get("fname");
+  const lname=formData.get("lname");
+const name= `${fname} ${lname}`;
+  const email=formData.get("email");
+  const password=formData.get("password");
+  const userData={
+    name,
+    email,
+    password,
+  }
+  const response=await fetch("http://localhost:3000/api/auth/register",{
+    method:'POST',
+    headers:{
+      'content-type': 'application/json'
+    },
+    body:JSON.stringify(userData),
+  });
+
+  const data= await response.json();
+  console.log('Data from POST API in action page:',data);
+ return data;
+
+}

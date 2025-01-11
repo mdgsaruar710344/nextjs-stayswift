@@ -10,6 +10,22 @@ export async function getAllUsers() {
   }
 }
 
+export async function createUser(data) {
+  const {name,email,password}=data;
+
+  try {
+    const createdUser=await usersModel.create({
+      name:name,
+      email:email,
+      password:password,
+    })
+    console.log(createdUser);
+    return createdUser;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function getUserByEmail(email) {
   try {
     const user=await usersModel.findOne({email:email}).lean();

@@ -58,11 +58,11 @@ const bookingsSchema= new Schema({
           type:ObjectId,
           required:true,  
         },
-        checkIn:{
+        checkin:{
           type:Number,
           required:true
         },     
-        checkOut:{
+        checkout:{
           type:Number,
           required:true
         },     

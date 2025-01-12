@@ -21,10 +21,17 @@ export async function getAllUsers() {
 //   }
 // }
 
-export async function getAllHotels() {
+export async function getAllHotels(destination,checkin,checkout) {
   try {
-    const hotels=await hotelsModel.find().lean();
-    console.log(hotels);
+    const hotels=await hotelsModel.find({
+     city: destination
+    }).lean();
+    // console.log(hotels);
+
+  //  const bookedhotel=await Promise.all(hotels.map(async (hotel)=>{
+  //   const bookings=  await getBookingsByHotelId(hotel._id);
+  //   return bookings;
+    // }));
     return hotels;
   } catch (error) {
     console.error(error);
@@ -71,6 +78,16 @@ export async function getBookingsByUserId(userId) {
   try {
     const bookings=await bookingsModel.find({
       userId:userId}).lean();
+    console.log(bookings);
+    return bookings;
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function getBookingsByHotelId(hotelId) {
+  try {
+    const bookings=await bookingsModel.find({
+      hotelId:hotelId}).lean();
     console.log(bookings);
     return bookings;
   } catch (error) {

@@ -1,9 +1,17 @@
+import { checkIfBooked } from '@/app/actions';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const HotelCard = ({hotel}) => {
+const HotelCard = async({hotel,checkin,checkout}) => {
+  const hotelId=hotel?._id;
+  let availableForBooked;
+  if(checkin&& checkout){
+    availableForBooked= await checkIfBooked(hotelId,checkin,checkout);
+    console.log('availableForBooked in Hotel card',availableForBooked,hotelId);
+  }
   
+ 
   return (
     <div>
        <div className="col-span-9">
@@ -28,6 +36,7 @@ const HotelCard = ({hotel}) => {
              <div className="flex flex-col gap-2 items-end justify-center">
                <h2 className="text-2xl font-bold text-right">$124/night</h2>
                <p className=" text-right">Per Night for 4 Rooms</p>
+               {availableForBooked ? <>Available</>:<> Booked</>}
                <Link href={`/hotels/${hotel?._id}`} className="btn-primary ">Details</Link>
              </div>
            </div>

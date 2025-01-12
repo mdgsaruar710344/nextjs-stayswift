@@ -2,7 +2,7 @@
 
 import { auth, signIn, signOut } from "@/auth"
 import { revalidatePath } from "next/cache";
-import { getAllHotels, getAmenitiesById, getBookingsByUserId, getHotelById, getRatingsByHotelId, getReviewsByHotelId, getUserByEmail } from "../queries";
+import { getAllHotels, getAmenitiesById, getBookingsByHotelId, getBookingsByUserId, getHotelById, getRatingsByHotelId, getReviewsByHotelId, getUserByEmail } from "../queries";
 
 export async function SignInWithGoogle(){
  const signedUser=await signIn("google", {redirectTo:"/"});
@@ -69,8 +69,9 @@ const name= `${fname} ${lname}`;
 
 }
 
-export async function handleGetAllHotels(){
-  const hotels= await getAllHotels();
+export async function handleGetAllHotels(destination,checkin,checkout){
+  const hotels= await getAllHotels(destination);
+
   return hotels;
 }
 
@@ -95,9 +96,37 @@ export async function handleGetBookingsByUserId(userId){
   const bookings= await getBookingsByUserId(userId);
   return bookings;
 }
+export async function handleGetBookingsByHotelId(hotelId){
+  const bookings= await getBookingsByHotelId(hotelId);
+  
+  return bookings;
+}
 export async function handleGetAmenitiesById(amenitiesId){
   const amenities= await getAmenitiesById(amenitiesId);
   return amenities;
 }
 
 
+
+
+export async function checkIfBooked(hotelId,checkin,checkout) {
+  const checkinMili=new Date(checkin).getTime();
+  const checkoutMili=new Date(checkout).getTime();
+
+
+  const bookings=  await getBookingsByHotelId(hotelId);
+  console.log('bookings in action with timestamp',bookings,checkinMili,checkoutMili);
+  if(bookings?.length>0){
+  const availableForBook=  bookings.every((book)=>
+         book.checkin>checkoutMili || book.checkout<checkinMili 
+    )
+    if(availableForBook){
+      return true;
+    }
+    else {
+      return null;
+    }
+  }
+      else {
+      return true;}
+  }

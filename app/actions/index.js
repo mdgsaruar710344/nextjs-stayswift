@@ -2,7 +2,8 @@
 
 import { auth, signIn, signOut } from "@/auth"
 import { revalidatePath } from "next/cache";
-import { getAllHotels, getAmenitiesById, getBookingsByHotelId, getBookingsByUserId, getHotelById, getRatingsByHotelId, getReviewsByHotelId, getUserByEmail } from "../queries";
+import { getAllHotels, getAmenitiesById, getBookingsByHotelId, getBookingsByUserId, getHotelById, getRatingsByHotelId, getReviewsByHotelId, getUserByEmail, getUserByID } from "../queries";
+import { redirect } from "next/navigation";
 
 export async function SignInWithGoogle(){
  const signedUser=await signIn("google", {redirectTo:"/"});
@@ -69,6 +70,10 @@ const name= `${fname} ${lname}`;
 
 }
 
+export async function handlePaymentSubmit(formData){
+ redirect('/bookings');
+}
+
 export async function handleGetAllHotels(destination,checkin,checkout){
   const hotels= await getAllHotels(destination);
 
@@ -77,6 +82,10 @@ export async function handleGetAllHotels(destination,checkin,checkout){
 
 export async function handleGetUserByEmail(email){
   const user= await getUserByEmail(email);
+  return user;
+}
+export async function handleGetUserByID(userId){
+  const user= await getUserByID(userId);
   return user;
 }
 

@@ -1,9 +1,11 @@
 import { checkIfBooked } from '@/app/actions';
+import { auth } from '@/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 const HotelCard = async({hotel,checkin,checkout}) => {
+  const session=await auth();
   const hotelId=hotel?._id;
   let availableForBooked;
   if(checkin&& checkout){
@@ -37,7 +39,8 @@ const HotelCard = async({hotel,checkin,checkout}) => {
                <h2 className="text-2xl font-bold text-right">$124/night</h2>
                <p className=" text-right">Per Night for 4 Rooms</p>
                {availableForBooked ? <>Available</>:<> Booked</>}
-               <Link href={`/hotels/${hotel?._id}`} className="btn-primary ">Details</Link>
+               {session?.user?  <Link href={`/hotels/${hotel?._id}?checkin=${checkin}&checkout=${checkout}`} className="btn-primary ">Details</Link>: <Link href={`/hotels/${hotel?._id}`} className="btn-primary ">Details</Link>}
+              
              </div>
            </div>
 

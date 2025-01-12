@@ -3,12 +3,16 @@ import { auth } from "@/auth";
 import Image from "next/image";
 import Link from "next/link";
 
-const HotelDetails =async ({hotel}) => {
+const HotelDetails =async ({hotel,availableForBooked,checkin,checkout}) => {
 const session=await auth();
 const email= session?.user?.email;
 const user= await handleGetUserByEmail(email);
 const userId= user?._id;
 const review=await handleGetReviewsByHotelId(hotel?._id);
+let readytobook;
+if(session?.user && availableForBooked){
+  readytobook=true;
+}
 if(review){
   console.log('Review of hotel',review);
 }
@@ -37,7 +41,9 @@ if(review){
              <div className="flex flex-col gap-2 items-end justify-center">
                <h2 className="text-2xl font-bold text-right">$124/night</h2>
                <p className=" text-right">Per Night for 4 Rooms</p>
-               <Link href={`/payment?hotelid=${hotel?._id}&userId=${user?._id}`} className="btn-primary ">Book</Link>
+               {availableForBooked ? <>Available</> :<>Booked</>}
+               {readytobook?(<Link href={`/payment?hotelid=${hotel?._id}&userId=${user?._id}@checkin=${checkin}&checkout=${checkout}`} className="btn-primary ">Book</Link>):( <button className="btn-primary cursor-not-allowed opacity-50">Not Available to Book</button>)}
+            
              </div>
            </div>
 

@@ -133,3 +133,12 @@ export async function getUserByEmail(email) {
     console.error(error);
   }
 }
+export async function getUserByID(userId) {
+  try {
+    const user=await usersModel.findById(userId).lean();
+    console.log(user);
+    return user;
+  } catch (error) {
+    console.error(error);
+  }
+}

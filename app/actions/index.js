@@ -107,8 +107,9 @@ export async function handlePaymentSubmit(formData){
 
 }
 
-export async function handleGetAllHotels(destination,checkin,checkout){
-  const hotels= await getAllHotels(destination);
+export async function handleGetAllHotels(destination,checkin,checkout,category){
+  console.log('category in actions',category);
+  const hotels= await getAllHotels(destination,checkin,checkout,category);
 
   return hotels;
 }

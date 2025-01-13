@@ -22,18 +22,39 @@ export async function getAllUsers() {
 //   }
 // }
 
-export async function getAllHotels(destination,checkin,checkout) {
+export async function getAllHotels(destination,checkin,checkout,category) {
   try {
-    const hotels=await hotelsModel.find({
-     city: destination
-    }).lean();
+    console.log('category inside queries',category);
+    if(category && destination){
+      
+      const hotels=await hotelsModel.find({
+        city: destination,
+        propertyCategory:{$in:category}
+       }).lean();
+       console.log('hotels in query1',hotels)
+       return hotels;
+    }
+    else if(!category && destination){
+      console.log('destination inside queries',destination);
+      const hotels=await hotelsModel.find({
+        city: destination
+       }).lean();
+       console.log('hotels in query2',hotels)
+       return hotels;
+    }
+    else if(!category && !destination){
+      const hotels=await hotelsModel.find().lean();
+       console.log('hotels in query3',hotels)
+       return hotels;
+    }
+ 
     // console.log(hotels);
 
   //  const bookedhotel=await Promise.all(hotels.map(async (hotel)=>{
   //   const bookings=  await getBookingsByHotelId(hotel._id);
   //   return bookings;
     // }));
-    return hotels;
+    
   } catch (error) {
     console.error(error);
   }

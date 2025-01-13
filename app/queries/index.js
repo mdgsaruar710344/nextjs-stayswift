@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { amenitiesModel, bookingsModel, hotelsModel, ratingsModel, reviewsModel, usersModel } from "../models";
 
 export async function getAllUsers() {
@@ -55,7 +56,7 @@ export async function getReviewsByHotelId(hotelID) {
 export async function getHotelById(hotelID) {
   try {
     const hotel=await hotelsModel.findById(hotelID).lean();
-    console.log(hotel);
+    // console.log(hotel);
     return hotel;
   } catch (error) {
     console.error(error);
@@ -119,6 +120,30 @@ export async function createUser(data) {
     })
     console.log(createdUser);
     return createdUser;
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function createBookings(data) {
+  const {hotelId, userId,checkin,checkout}=data;
+  const hotelidString = hotelId;
+  const useridString = userId;
+
+// Convert to ObjectId
+const objecthotelId =new mongoose.Types.ObjectId(hotelidString);
+const objectuserId =new mongoose.Types.ObjectId(useridString);
+
+
+console.log('bookings data before inserting in database',objecthotelId,objectuserId,checkin,checkout);
+  try {
+    const createdBookings=await bookingsModel.create({
+      hotelId:objecthotelId,
+      userId:objectuserId,
+      checkin:checkin,
+      checkout:checkout,
+    })
+    console.log(createdBookings);
+    return createdBookings;
   } catch (error) {
     console.error(error);
   }

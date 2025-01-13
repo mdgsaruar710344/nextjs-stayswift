@@ -42,7 +42,7 @@ if(review){
                <h2 className="text-2xl font-bold text-right">$124/night</h2>
                <p className=" text-right">Per Night for 4 Rooms</p>
                {availableForBooked ? <>Available</> :<>Booked</>}
-               {readytobook?(<Link href={`/payment?hotelid=${hotel?._id}&userId=${user?._id}@checkin=${checkin}&checkout=${checkout}`} className="btn-primary ">Book</Link>):( <button className="btn-primary cursor-not-allowed opacity-50">Not Available to Book</button>)}
+               {readytobook?(<Link href={`/payment?hotelid=${hotel?._id}&userId=${user?._id}&checkin=${checkin}&checkout=${checkout}`} className="btn-primary ">Book</Link>):( <button className="btn-primary cursor-not-allowed opacity-50">Not Available to Book</button>)}
             
              </div>
            </div>

@@ -71,7 +71,40 @@ const name= `${fname} ${lname}`;
 }
 
 export async function handlePaymentSubmit(formData){
- redirect('/bookings');
+
+  const name=formData.get("name");
+  const email=formData.get("email");
+  const checkinDate=formData.get("checkin");
+  const checkoutDate=formData.get("checkout");
+  const hotelId=formData.get("hotelId");
+  const userId=formData.get("userId");
+  
+  const checkin= new Date(checkinDate).getTime();
+  const checkout= new Date(checkoutDate).getTime();
+
+  console.log('checkin, checkout data in actions handlepayment submit',checkin,checkout,checkinDate,checkoutDate);
+  const paymentData={
+    name,
+    email,
+    checkin,
+    checkout,
+    hotelId,
+    userId,
+  }
+  const response=await fetch("http://localhost:3000/api/auth/payment",{
+    method:'POST',
+    headers:{
+      'content-type': 'application/json'
+    },
+    body:JSON.stringify(paymentData),
+  });
+
+  const data= await response.json();
+  console.log('Data from POST API of payment in action page:',data);
+ if(data){
+  redirect('/bookings');
+ }
+
 }
 
 export async function handleGetAllHotels(destination,checkin,checkout){

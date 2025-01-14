@@ -4,6 +4,7 @@ import HotelList from "../../components/hotellisting/HotelList";
 import Search from "../../components/search/Search";
 import CheckboxComponent from "@/app/components/hotellisting/Checkboxtest";
 import PriceRangeFilter from "@/app/components/hotellisting/PriceRangeFilter";
+import SortByFilter from "@/app/components/hotellisting/SortByFilter";
 
 const hotelPage = async({searchParams}) => {
   console.log(searchParams)
@@ -22,6 +23,7 @@ const hotelPage = async({searchParams}) => {
     <div>
       <Search fromHome={false}></Search>
       <div className="flex gap-40 justify-center">
+        <SortByFilter></SortByFilter>
         <PriceRangeFilter></PriceRangeFilter>
       <Filter></Filter>
       <HotelList hotels={hotels} destination={destination} checkin={checkin} checkout={checkout} category={category} priceRange={priceRange} ></HotelList>

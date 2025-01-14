@@ -22,7 +22,7 @@ console.log('all target',targetDestination,targetCheckin,targetCheckOut);
   const handleChange=(e)=>{
    e.preventDefault();
    const {name,value}=e.target
-  //  console.log(name,value);
+   console.log(name,value);
    setSearchTerm( (prevData)=>({...prevData,[name]:value}))
   }
 useEffect(()=>{
@@ -36,9 +36,10 @@ useEffect(()=>{
         params.delete('checkout');
       }else if(checkin && !checkout){
           params.set('checkin',checkin);
+          setIsSearchButtonVisible(false);
       }
-      else if(checkout &&!checkin){
-     
+      else if(checkout && !checkin){
+        setIsSearchButtonVisible(false);
       }
       else if(checkout&& checkin){
         params.set('checkout',checkout);
@@ -46,8 +47,9 @@ useEffect(()=>{
         const checkinTime= new Date(checkin).getTime();
         const checkoutTime= new Date(checkout).getTime();
         const currentTime=Date.now();
+        console.log('current time',currentTime);
         console.log(checkinTime,checkoutTime);
-        if(checkinTime>checkoutTime && checkinTime<currentTime ){
+        if(checkinTime>checkoutTime || checkinTime<currentTime ){
           setIsSearchButtonVisible(false);
         }
       }

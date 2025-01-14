@@ -22,7 +22,7 @@ export async function getAllUsers() {
 //   }
 // }
 
-export async function getAllHotels(destination,checkin,checkout,category) {
+export async function getAllHotels(destination,checkin,checkout,category,priceRange) {
   try {
     console.log('category inside queries',category);
     if(category && destination){

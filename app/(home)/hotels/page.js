@@ -3,6 +3,7 @@ import Filter from "../../components/hotellisting/Filter";
 import HotelList from "../../components/hotellisting/HotelList";
 import Search from "../../components/search/Search";
 import CheckboxComponent from "@/app/components/hotellisting/Checkboxtest";
+import PriceRangeFilter from "@/app/components/hotellisting/PriceRangeFilter";
 
 const hotelPage = async({searchParams}) => {
   console.log(searchParams)
@@ -12,14 +13,18 @@ const hotelPage = async({searchParams}) => {
   const categoryQuery=searchParams?.category;
   const category=categoryQuery?.split("|");
   console.log('category query',categoryQuery,category)
-  const hotels= await handleGetAllHotels(destination,checkin,checkout,category);
+  const priceRangeQuery=searchParams?.pricerange;
+  const priceRange=priceRangeQuery?.split("|");
+  console.log('priceRange query',priceRangeQuery,priceRange)
+  const hotels= await handleGetAllHotels(destination,checkin,checkout,category,priceRange);
   // console.log(hotels);
   return (
     <div>
       <Search fromHome={false}></Search>
-      <div className="flex gap-80 justify-center">
+      <div className="flex gap-40 justify-center">
+        <PriceRangeFilter></PriceRangeFilter>
       <Filter></Filter>
-      <HotelList hotels={hotels} destination={destination} checkin={checkin} checkout={checkout} category={category}  ></HotelList>
+      <HotelList hotels={hotels} destination={destination} checkin={checkin} checkout={checkout} category={category} priceRange={priceRange} ></HotelList>
       </div>
    
     </div>

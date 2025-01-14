@@ -107,9 +107,10 @@ export async function handlePaymentSubmit(formData){
 
 }
 
-export async function handleGetAllHotels(destination,checkin,checkout,category){
+export async function handleGetAllHotels(destination,checkin,checkout,category,priceRange){
   console.log('category in actions',category);
-  const hotels= await getAllHotels(destination,checkin,checkout,category);
+  console.log('priceRange in actions',priceRange);
+  const hotels= await getAllHotels(destination,checkin,checkout,category,priceRange);
 
   return hotels;
 }

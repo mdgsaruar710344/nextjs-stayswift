@@ -45,8 +45,9 @@ useEffect(()=>{
         params.set('checkin',checkin);
         const checkinTime= new Date(checkin).getTime();
         const checkoutTime= new Date(checkout).getTime();
+        const currentTime=Date.now();
         console.log(checkinTime,checkoutTime);
-        if(checkinTime>checkoutTime){
+        if(checkinTime>checkoutTime && checkinTime<currentTime ){
           setIsSearchButtonVisible(false);
         }
       }

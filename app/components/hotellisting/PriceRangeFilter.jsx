@@ -37,32 +37,32 @@ router.push(`${pathname}?${params.toString()}`)
             <form onChange={handleRangeChange} className="flex flex-col gap-2 mt-2">
               <label htmlFor="range1">
                 <input type="checkbox" name="range1" id="range1"/>
-                $ 13 - $ 30
+                Below $1000
               </label>
 
               <label htmlFor="range2">
                 <input type="checkbox" name="range2" id="range2"/>
-                $ 30 - $ 60
+                $ 1000 - $ 1999
               </label>
 
               <label htmlFor="range3">
                 <input type="checkbox" name="range3" id="range3"/>
-                $ 60 - $ 97
+                $ 2000 - $ 2999
               </label>
 
               <label htmlFor="range3">
                 <input type="checkbox" name="range4" id="range3"/>
-                $ 97 - $ 152
+                $ 3000 - $ 3999
               </label>
 
               <label htmlFor="range4">
                 <input type="checkbox" name="range5" id="range4"/>
-                $ 152 - $ 182
+                $ 4000 - $ 4999
               </label>
 
               <label htmlFor="range5">
                 <input type="checkbox" name="range6" id="range5"/>
-                $ 182+
+               Higher  $5000
               </label>
             </form>
           </div>

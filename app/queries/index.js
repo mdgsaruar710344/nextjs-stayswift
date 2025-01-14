@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { amenitiesModel, bookingsModel, hotelsModel, ratingsModel, reviewsModel, usersModel } from "../models";
+import { setPriceRangeValues } from "../utils/utils";
 
 export async function getAllUsers() {
   try {
@@ -10,22 +11,14 @@ export async function getAllUsers() {
     console.error(error);
   }
 }
-// export async function getUserByEmail(email) {
-//   try {
-//     const user=await usersModel.find({
-//       email:email,
-//     }).lean();
-//     console.log(user);
-//     return user;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+
 
 export async function getAllHotels(destination,checkin,checkout,category,priceRange) {
+ 
   try {
     console.log('category inside queries',category);
-    if(category && destination){
+    const highAndLowRange=setPriceRangeValues(priceRange);
+    if(category && destination && !highAndLowRange){
       
       const hotels=await hotelsModel.find({
         city: destination,
@@ -34,27 +27,65 @@ export async function getAllHotels(destination,checkin,checkout,category,priceRa
        console.log('hotels in query1',hotels)
        return hotels;
     }
-    else if(!category && destination){
-      console.log('destination inside queries',destination);
+   else if(category && !destination && highAndLowRange){
+      
       const hotels=await hotelsModel.find({
-        city: destination
+        propertyCategory:{$in:category},
+        lowRate:{$gte: highAndLowRange.low, $lte: highAndLowRange.high}
        }).lean();
        console.log('hotels in query2',hotels)
        return hotels;
     }
-    else if(!category && !destination){
-      const hotels=await hotelsModel.find().lean();
+   else if(!category && destination && highAndLowRange){
+      
+      const hotels=await hotelsModel.find({
+        city: destination,
+        lowRate:{$gte: highAndLowRange.low, $lte: highAndLowRange.high}
+
+       }).lean();
        console.log('hotels in query3',hotels)
        return hotels;
     }
- 
-    // console.log(hotels);
-
-  //  const bookedhotel=await Promise.all(hotels.map(async (hotel)=>{
-  //   const bookings=  await getBookingsByHotelId(hotel._id);
-  //   return bookings;
-    // }));
-    
+   else if(category && destination && highAndLowRange){
+      
+      const hotels=await hotelsModel.find({
+        city: destination,
+        propertyCategory:{$in:category},
+        lowRate:{$gte: highAndLowRange.low, $lte: highAndLowRange.high}
+       }).lean();
+       console.log('hotels in query4',hotels)
+       return hotels;
+    }
+    else if(!category && !highAndLowRange && destination){
+      console.log('destination inside queries',destination);
+      const hotels=await hotelsModel.find({
+        city: destination
+       }).lean();
+       console.log('hotels in query5',hotels)
+       return hotels;
+    }
+    else if(category && !highAndLowRange && !destination){
+      console.log('destination inside queries',destination);
+      const hotels=await hotelsModel.find({
+        propertyCategory:{$in:category}
+       }).lean();
+       console.log('hotels in query6',hotels)
+       return hotels;
+    }
+    else if(!category && highAndLowRange && !destination){
+      console.log('destination inside queries',destination);
+      const hotels=await hotelsModel.find({
+        lowRate:{$gte: highAndLowRange.low, $lte: highAndLowRange.high}
+       }).lean();
+       console.log('hotels in query7',hotels)
+       return hotels;
+    }
+    else if(!category && !destination && !highAndLowRange){
+      const hotels=await hotelsModel.find().lean();
+       console.log('hotels in query8',hotels)
+       return hotels;
+    }
+      
   } catch (error) {
     console.error(error);
   }

@@ -16,12 +16,12 @@ setPriceRange((prev)=>[...prev,name]);
 else{
   setPriceRange((prev)=>prev.filter((item)=>item!==name));
 }};
-console.log(priceRange);
+
 
 useEffect(()=>{
 if (priceRange.length>0) {
   const querydata=priceRange.join('|');
-  console.log(querydata);
+ 
   params.set('pricerange',querydata);
 }
 else{

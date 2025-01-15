@@ -14,7 +14,7 @@ const Filter = () => {
  const handleChange=(e)=>{
 
    const {value,checked}=e.target;
-   console.log(value);
+   
   
 
   if (checked) {   
@@ -24,11 +24,11 @@ const Filter = () => {
     setCheckboxdata((prev) => prev.filter((item) => item !== value))
        }
       }  
- console.log(checkboxdata);
+
 useEffect(()=>{
 if (checkboxdata.length>0) {
   const querydata=checkboxdata.join('|');
-  console.log(querydata);
+
   params.set('category',querydata);
 }
 else{

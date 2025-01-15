@@ -8,7 +8,7 @@ const Search = () => {
  const searchParams= useSearchParams();
  const router= useRouter();
 
- console.log("pathname",pathname)
+
 
  const [searchTerm,setSearchTerm]= useState({
   destination: searchParams?.get('destination') || 'Puglia',
@@ -20,11 +20,11 @@ const Search = () => {
   const handleChange=(e)=>{
 
    const {name,value}=e.target
-   console.log(name,value);
+
    setSearchTerm( (prevData)=>({...prevData,[name]:value}))
   }
 useEffect(()=>{
-  console.log(searchTerm);
+
   const {destination,checkin,checkout}=searchTerm;
   setIsSearchButtonVisible(true);
     

@@ -23,7 +23,7 @@ const Payment = ({user,hotel,checkin,checkout}) => {
   
 
 
-  console.log('data sent to payment page',email,name,hotelname,hotelId,userId,checkin,checkout);
+ 
   return (
     <div>
         <section className="container">

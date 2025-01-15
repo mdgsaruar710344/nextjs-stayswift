@@ -8,9 +8,7 @@ const Registration = () => {
        e.preventDefault();
        const formData=new FormData(e.currentTarget);
       const submittedUserInfo= await handleRegistration(formData);
-      if(submittedUserInfo){
-        console.log("user submitted successfully", submittedUserInfo);
-      }
+    
   }
   return (
     <div className=" items-center text-center ">

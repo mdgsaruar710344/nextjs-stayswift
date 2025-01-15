@@ -16,7 +16,7 @@ const SortByFilter = () => {
   const handleChange=(e)=>{
   
    const {value}=e.target;
-   console.log(value);
+   
    setsortMethod((prev)=>({...prev,method:value}));
   }
   useEffect(()=>{

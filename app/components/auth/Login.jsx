@@ -27,7 +27,7 @@ const router= useRouter();
       setError(response.error.message)
      }
      else{
-       console.log("Response is:",response);
+    
        
   
         router.push("/bookings");

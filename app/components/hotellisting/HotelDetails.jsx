@@ -13,9 +13,7 @@ let readytobook;
 if(session?.user && availableForBooked){
   readytobook=true;
 }
-if(review){
-  console.log('Review of hotel',review);
-}
+
   return (
     <div>
       Hello

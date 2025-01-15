@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 
 
 const BookedHotelCard =async ({booking}) => {
-  console.log('booking in component',booking);
+  
   let hotel;
   let days;
  const hotelId=booking?.hotelId;
@@ -19,7 +19,7 @@ const BookedHotelCard =async ({booking}) => {
  if (hotelId) {
   const foundhotel= await handleGetHotelById(hotelId);
   hotel=foundhotel;
-  console.log("hotel in bookCard",hotel);
+  
  }
   return (
     <div>

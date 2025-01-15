@@ -11,7 +11,7 @@ const HotelCard = async({hotel,checkin,checkout}) => {
   let bookingStatus;
   if(checkin&& checkout){
     availableForBooked= await checkIfBooked(hotelId,checkin,checkout);
-    console.log('availableForBooked in Hotel card',availableForBooked,hotelId);
+    
   }
   if (availableForBooked=='nodate') {
     bookingStatus="Provide date to check availability"

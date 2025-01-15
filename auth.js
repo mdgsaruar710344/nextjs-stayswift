@@ -51,5 +51,6 @@ providers:[
   })
 
  
-]
+],
+trustHost: true, 
 });

@@ -12,6 +12,7 @@ const hotelPage = async({searchParams}) => {
   const checkin=searchParams?.checkin;
   const checkout=searchParams?.checkout;
   const categoryQuery=searchParams?.category;
+  const sort=searchParams?.sort;
   const category=categoryQuery?.split("|");
   console.log('category query',categoryQuery,category)
   const priceRangeQuery=searchParams?.pricerange;
@@ -26,7 +27,7 @@ const hotelPage = async({searchParams}) => {
         <SortByFilter></SortByFilter>
         <PriceRangeFilter></PriceRangeFilter>
       <Filter></Filter>
-      <HotelList hotels={hotels} destination={destination} checkin={checkin} checkout={checkout} category={category} priceRange={priceRange} ></HotelList>
+      <HotelList hotels={hotels} destination={destination} checkin={checkin} checkout={checkout} category={category} priceRange={priceRange} sort={sort} ></HotelList>
       </div>
    
     </div>

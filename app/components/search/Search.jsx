@@ -1,26 +1,24 @@
 "use client"
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {  usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Search = () => {
  const pathname= usePathname();
  const searchParams= useSearchParams();
  const router= useRouter();
- const params= new URLSearchParams(searchParams);
-const targetDestination=params?.get('destination');
-const targetCheckin=params?.get('checkin');
-const targetCheckOut=params?.get('checkout');
-console.log('all target',targetDestination,targetCheckin,targetCheckOut);
+
+ console.log("pathname",pathname)
+ console.log("absolute pathname",window.location.href);
  const [searchTerm,setSearchTerm]= useState({
-  destination: targetDestination || 'Puglia',
-  checkin: targetCheckin||'',
-  checkout:targetCheckOut|| '',
+  destination: searchParams?.get('destination') || 'Puglia',
+  checkin: searchParams?.get('checkin')||'',
+  checkout:searchParams?.get('checkout')|| '',
  })
 
  const [isSearchButtonActive,setIsSearchButtonVisible]=useState(true);
   const handleChange=(e)=>{
-   e.preventDefault();
+
    const {name,value}=e.target
    console.log(name,value);
    setSearchTerm( (prevData)=>({...prevData,[name]:value}))
@@ -29,48 +27,53 @@ useEffect(()=>{
   console.log(searchTerm);
   const {destination,checkin,checkout}=searchTerm;
   setIsSearchButtonVisible(true);
-    params.set('destination',destination)
+    
+  if (checkin && checkout) {
+    const checkinTime = new Date(checkin).getTime();
+    const checkoutTime = new Date(checkout).getTime();
+    const currentTime = Date.now();
 
-      if(!checkin && !checkout){
-        params.delete('checkin');
-        params.delete('checkout');
-      }else if(checkin && !checkout){
-          params.set('checkin',checkin);
-          setIsSearchButtonVisible(false);
-      }
-      else if(checkout && !checkin){
-        setIsSearchButtonVisible(false);
-      }
-      else if(checkout&& checkin){
-        params.set('checkout',checkout);
-        params.set('checkin',checkin);
-        const checkinTime= new Date(checkin).getTime();
-        const checkoutTime= new Date(checkout).getTime();
-        const currentTime=Date.now();
-        console.log('current time',currentTime);
-        console.log(checkinTime,checkoutTime);
-        if(checkinTime>checkoutTime || checkinTime<currentTime ){
-          setIsSearchButtonVisible(false);
-        }
-      }
-  
+    if (checkinTime > checkoutTime || checkinTime < currentTime) {
+      setIsSearchButtonVisible(false);
+    }
+  } else if (checkin || checkout) {
+    setIsSearchButtonVisible(false);
+  }
+      
 
 },[searchTerm])
 
-useEffect(()=>{
-console.log(params.toString());
-console.log(params);
-},[params])
 
-const handleSearchSubmit=async()=>{
-  if(pathname.includes('/hotels')){
-    router.push(`${pathname}?${params.toString()}`);
-}
-else{
-  router.push(`${pathname}hotels?${params.toString()}`);
-}
 
+const handleSearchSubmit = async () => {
+  const { destination, checkin, checkout } = searchTerm;
+
+  const queryParams = new URLSearchParams();
+
+  queryParams.set("destination", destination);
+
+  // Only set checkin and checkout if they are provided; otherwise, delete them.
+  if (checkin) {
+    queryParams.set("checkin", checkin);
+  } else {
+    queryParams.delete("checkin");
   }
+
+  if (checkout) {
+    queryParams.set("checkout", checkout);
+  } else {
+    queryParams.delete("checkout");
+  }
+
+  const queryString = queryParams.toString();
+
+  if (pathname.includes("/hotels")) {
+    router.push(`http://localhost:3000/?${queryString}`);
+  } else {
+    router.push(`http://localhost:3000/hotels?${queryString}`);
+  }
+};
+
 
 
   return (
@@ -81,7 +84,7 @@ else{
               <div>
                 <span>Destination</span>
                 <h4 className="mt-2">
-                  <select defaultValue={targetDestination? targetDestination:'Puglia'} onChange={handleChange} name="destination" id="destination">
+                  <select defaultValue={searchTerm.destination} onChange={handleChange} name="destination" id="destination">
                     <option value="Puglia">Puglia</option>
                     <option value="Catania">Catania</option>
                     <option value="Paris">Paris</option>
@@ -96,7 +99,7 @@ else{
               <div>
                 <span>Check in</span>
                 <h4 className="mt-2">
-                  <input onChange={handleChange} type="date" defaultValue={targetCheckin&& targetCheckin} name="checkin" id="checkin"/>
+                  <input onChange={handleChange} type="date" defaultValue={searchTerm.checkin} name="checkin" id="checkin"/>
                 </h4>
 
               </div>
@@ -105,7 +108,7 @@ else{
               <div>
                 <span>Checkout</span>
                 <h4 className="mt-2">
-                  <input onChange={handleChange} type="date" defaultValue={targetCheckOut&& targetCheckOut} name="checkout" id="checkout"/>
+                  <input onChange={handleChange} type="date" defaultValue={searchTerm.checkout} name="checkout" id="checkout"/>
                 </h4>
               </div>
             </div>

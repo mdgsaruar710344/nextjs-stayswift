@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 const SortByFilter = () => {
@@ -10,20 +10,31 @@ const SortByFilter = () => {
  const sort=params?.get('sort');
 
   const [sortMethod,setsortMethod]=useState({
-    ascending:true,
-    descending:false,
+    method:''
+    
   })
   const handleChange=(e)=>{
-   e.preventDefault();
+  
    const {value}=e.target;
    console.log(value);
+   setsortMethod((prev)=>({...prev,method:value}));
   }
+  useEffect(()=>{
+      if (sortMethod.method=='default') {
+        params.delete('sort')
+      }
+      else{
+        params.set('sort',sortMethod.method)
+      }
+    router.push(`${pathname}?${params.toString()}`)
+  },[sortMethod])
   return (
     <div>
         <div>
             <h3 className="font-bold text-lg">Sort By</h3>
             <form  className="flex flex-col gap-2 mt-2">
-            <select  onChange={handleChange} name="sortOption" id="sortOption">
+            <select  onChange={handleChange} name="sortOption" defaultValue={ sort? sort:'default'} id="sortOption">
+                    <option value="default">Default</option>
                     <option value="asc">Low to High</option>
                     <option value="desc">High to Low</option>
                   

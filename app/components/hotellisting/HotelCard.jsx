@@ -7,12 +7,21 @@ import React from 'react';
 const HotelCard = async({hotel,checkin,checkout}) => {
   const session=await auth();
   const hotelId=hotel?._id;
-  let availableForBooked;
+  let availableForBooked='nodate';
+  let bookingStatus;
   if(checkin&& checkout){
     availableForBooked= await checkIfBooked(hotelId,checkin,checkout);
     console.log('availableForBooked in Hotel card',availableForBooked,hotelId);
   }
-  
+  if (availableForBooked=='nodate') {
+    bookingStatus="Provide date to check availability"
+  }
+  else if(availableForBooked){
+bookingStatus='Available'
+  }
+  else if(!availableForBooked){
+bookingStatus='Booked';
+  }
  
   return (
     <div>
@@ -38,7 +47,7 @@ const HotelCard = async({hotel,checkin,checkout}) => {
              <div className="flex flex-col gap-2 items-end justify-center">
                <h2 className="text-2xl font-bold text-right">$124/night</h2>
                <p className=" text-right">Per Night for 4 Rooms</p>
-               {availableForBooked ? <>Available</>:<> Booked</>}
+               {bookingStatus? bookingStatus:''}
                {session?.user?  <Link href={`/hotels/${hotel?._id}?checkin=${checkin}&checkout=${checkout}`} className="btn-primary ">Details</Link>: <Link href={`/hotels/${hotel?._id}`} className="btn-primary ">Details</Link>}
               
              </div>

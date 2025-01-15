@@ -9,7 +9,7 @@ const Search = () => {
  const router= useRouter();
 
  console.log("pathname",pathname)
- console.log("absolute pathname",window.location.href);
+
  const [searchTerm,setSearchTerm]= useState({
   destination: searchParams?.get('destination') || 'Puglia',
   checkin: searchParams?.get('checkin')||'',
@@ -68,7 +68,7 @@ const handleSearchSubmit = async () => {
   const queryString = queryParams.toString();
 
   if (pathname.includes("/hotels")) {
-    router.push(`http://localhost:3000/?${queryString}`);
+    router.push(`http://localhost:3000/hotels?${queryString}`);
   } else {
     router.push(`http://localhost:3000/hotels?${queryString}`);
   }

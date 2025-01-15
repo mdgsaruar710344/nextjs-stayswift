@@ -68,9 +68,9 @@ const handleSearchSubmit = async () => {
   const queryString = queryParams.toString();
 
   if (pathname.includes("/hotels")) {
-    router.push(`http://localhost:3000/hotels?${queryString}`);
+    router.push(`${pathname}?${queryString}`);
   } else {
-    router.push(`http://localhost:3000/hotels?${queryString}`);
+    router.push(`${pathname}hotels?${queryString}`);
   }
 };
 

@@ -70,7 +70,8 @@ const handleSearchSubmit = async () => {
   if (pathname.includes("/hotels")) {
     router.push(`${pathname}?${queryString}`);
   } else {
-    router.push(`${pathname}hotels?${queryString}`);
+    const newPath = pathname.endsWith("/") ? `${pathname}hotels` : `${pathname}/hotels`;
+  router.push(`${newPath}?${queryString}`);
   }
 };
 
